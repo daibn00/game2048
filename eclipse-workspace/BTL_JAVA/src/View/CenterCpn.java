@@ -19,9 +19,11 @@ public class CenterCpn extends JPanel {
 	public CenterCpn() {
 		this.setLayout(new GridLayout(4, 4, 3, 3));
 	}
+	Font labelFont = new Font("Brush Script Std", Font.PLAIN, 30);
 
 	public void init() {
 		for (int i = 0; i < 16; i++) {
+			nodes[i].setFont(labelFont);
 			nodes[i].setOpaque(true);
 			int value = broad.getMyTiles()[i].getValue();
 			if (value > 0) {
