@@ -14,7 +14,7 @@ public class saveDataDB {
 	
 	
 	
-	public static void insertDataDb(String data) {
+	public static void insertDataDb(String data, int score) {
 		Connection conn = null;
 		Statement stm = null;
 		PreparedStatement prestm = null;
@@ -30,8 +30,9 @@ public class saveDataDB {
 				}
 				 conn = DriverManager.getConnection(Constant.DB_URL, Constant.USER_NAME, Constant.DB_PASSWORD);
 				 stm = conn.createStatement();
-				 prestm =  conn.prepareStatement("UPDATE broad SET data = ? WHERE id = 1");			 
+				 prestm =  conn.prepareStatement("UPDATE broad SET data = ?, score = ? WHERE id = 1");			 
 				 prestm.setString(1, data);
+				 prestm.setInt(2, score);
 				 prestm.execute();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -74,9 +75,9 @@ public class saveDataDB {
 				}
 				 conn = DriverManager.getConnection(Constant.DB_URL, Constant.USER_NAME, Constant.DB_PASSWORD);
 				 stm = conn.createStatement();
-                 rs = stm.executeQuery("SELECT data from broad where id = 1");
+                 rs = stm.executeQuery("SELECT data, score from broad where id = 1");
                  while(rs.next()) {
-                	 return rs.getString("data");
+                	 return rs.getString("data") + rs.getString("score");
                  }
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

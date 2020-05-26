@@ -4,16 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
-import View.BestScoreCpn;
-import View.CenterCpn;
 import View.Frame2048;
-import View.GamePanelCpn;
-import View.NorthCpn;
-import View.ScoreCpn;
 import modal.File_Io_bestScore;
 import modal.saveDataDB;
 
@@ -25,11 +16,11 @@ public class ListenerGame implements KeyListener, ActionListener {
 		this.mainFrame = mainFrame;
 		this.mainFrame.mainGame.centerPanel.setBroad(g);
 	}
-	
-	public void rePaint() {
+
+	public void rePaint(int score) {
 		this.mainFrame.mainGame.centerPanel.setBroad(g);
 		this.mainFrame.mainGame.centerPanel.init();
-		this.mainFrame.mainGame.nouthPanel.getScore().setScore(g.getBackScore());
+		this.mainFrame.mainGame.nouthPanel.getScore().setScore(score);
 	}
 
 	@Override
@@ -41,20 +32,26 @@ public class ListenerGame implements KeyListener, ActionListener {
 			this.mainFrame.mainGame.nouthPanel.setFocusableButton();
 			this.mainFrame.mainGame.centerPanel.setFocusPanel();
 			g.setMyTiles(g.getBackMyTiles());
-			this.rePaint();
-					}
+//			g.setMyScore();(g.getBackScore());
+			System.out.println(g.getMyScore());
+			this.rePaint(g.getBackScore());
+		}
 
 		if ("NewGame".equalsIgnoreCase(e.getActionCommand())) {
 			g.resetGame();
-			this.rePaint();
+			this.rePaint(g.getMyScore());
 		}
-		
-		if("Resume".equalsIgnoreCase(e.getActionCommand())) {
+
+		if ("Resume".equalsIgnoreCase(e.getActionCommand())) {
 			String[] data = saveDataDB.getDataDb().split(" ");
-			for(int i = 0 ;i < 16 ;i++) {
+			String scoreDb = saveDataDB.getDataDb().split(" ")[16];
+			g.setMyScore(Integer.parseInt(scoreDb));
+			this.mainFrame.mainGame.nouthPanel.getScore().setScore(Integer.parseInt(scoreDb));
+			for (int i = 0; i < 16; i++) {
 				g.getMyTiles()[i].setValue(Integer.parseInt(data[i]));
 			}
-			this.rePaint();
+			this.mainFrame.mainGame.centerPanel.setBroad(g);
+			this.mainFrame.mainGame.centerPanel.init();
 		}
 
 		if ("Save".equals(e.getActionCommand())) {
@@ -63,7 +60,7 @@ public class ListenerGame implements KeyListener, ActionListener {
 			for (int i = 0; i < 16; i++) {
 				data += (this.g.getMyTiles()[i].getValue() + " ");
 			}
-			saveDataDB.insertDataDb(data);
+			saveDataDB.insertDataDb(data, g.getMyScore());
 
 		}
 		if ("Exit".equals(e.getActionCommand())) {
@@ -110,11 +107,12 @@ public class ListenerGame implements KeyListener, ActionListener {
 
 				break;
 			}
-			this.rePaint();
-			
-			if(g.getMyScore() < Integer.parseInt(File_Io_bestScore.readScore())) {
-				this.mainFrame.mainGame.nouthPanel.getBestScore().setBestScore(Integer.parseInt(File_Io_bestScore.readScore()));
-			}else {
+			this.rePaint(g.getMyScore());
+
+			if (g.getMyScore() < Integer.parseInt(File_Io_bestScore.readScore())) {
+				this.mainFrame.mainGame.nouthPanel.getBestScore()
+						.setBestScore(Integer.parseInt(File_Io_bestScore.readScore()));
+			} else {
 				this.mainFrame.mainGame.nouthPanel.getBestScore().setBestScore(g.getMyScore());
 				File_Io_bestScore.writeScore(g.getMyScore());
 			}

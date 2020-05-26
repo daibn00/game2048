@@ -97,8 +97,8 @@ public class Broad extends JPanel {
 	public void setGameSize(int num) {
 		this.GAME_SIZE = num;
 		resetGame();
-		// this.paint();
-		this.setLayout(new GridLayout(GAME_SIZE, GAME_SIZE, 4, 4));
+//		// this.paint();
+//		this.setLayout(new GridLayout(GAME_SIZE, GAME_SIZE, 4, 4));
 	}
 
 	private void move() {
@@ -167,6 +167,7 @@ public class Broad extends JPanel {
 		}
 		addTile();
 		addTile();
+		this.setBackMyTiles(this.getMyTiles());
 
 	}
 
