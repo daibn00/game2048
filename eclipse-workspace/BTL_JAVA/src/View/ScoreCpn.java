@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
@@ -11,8 +12,10 @@ public class ScoreCpn extends JPanel{
 	private JLabel score = new JLabel("",JLabel.CENTER);
 	private int myScore = 0;
 	
-	public ScoreCpn() {
+	public ScoreCpn() { 	
 		this.setLayout(new GridLayout(2,1));
+		lableScore.setFont(new Font("Forte", Font.PLAIN, 25));
+		score.setFont(new Font("Arial", Font.PLAIN, 25));
 		 this.score.setText("0");
 		this.add(lableScore);
 		this.add(score);

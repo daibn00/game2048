@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.JOptionPane;
+
 import View.Frame2048;
 import modal.File_Io_bestScore;
 import modal.saveDataDB;
@@ -82,6 +86,13 @@ public class ListenerGame implements KeyListener, ActionListener {
 		if (keyCode == KeyEvent.VK_ESCAPE) {
 			g.resetGame();
 		}
+		if(keyCode == KeyEvent.VK_E) {
+			System.exit(0);
+		}
+		
+		if (!g.canMove()) {
+			this.g.setLose(true);
+		}
 
 		if (!g.isWin() && !g.isLose()) {
 			switch (keyCode) {
@@ -107,6 +118,11 @@ public class ListenerGame implements KeyListener, ActionListener {
 
 				break;
 			}
+			
+			if (!g.isWin() && !g.canMove()) {
+				this.g.setLose(true);
+			}
+			
 			this.rePaint(g.getMyScore());
 
 			if (g.getMyScore() < Integer.parseInt(File_Io_bestScore.readScore())) {
@@ -119,34 +135,31 @@ public class ListenerGame implements KeyListener, ActionListener {
 
 			this.mainFrame.mainGame.southPanel.setStepMove(g.getStepMove());
 
-//			if (!g.canMove()) {
-//				g.setLose(true);
-//				
-//			}
-//			if(g.isWin()) {
-//			System.out.println(11111);
-//				JOptionPane.showMessageDialog(this.mainCpn, "You thắng","Yoi Win" ,JOptionPane.ERROR_MESSAGE);
-//				int continues = JOptionPane.showConfirmDialog(this.mainCpn, "Do You Want To Continue ?", "YES NO QUESTION ? ", JOptionPane.YES_NO_OPTION);
-//				if(continues == 0) {
-//					g.setWin(false) ;
-//				}
-//				
-//			}
-//			if (!g.canMove()) {
-//				g.setLose(true) ;
-//				JOptionPane.showMessageDialog(this.mainCpn, "You thua","Bạn Thua" ,JOptionPane.ERROR_MESSAGE);
-//				int continues = JOptionPane.showConfirmDialog(this.mainCpn, "Do You Want To Continue ?", "YES NO QUESTION ? ", JOptionPane.YES_NO_OPTION);
-//				if(continues == 0) {
-//					g.resetGame();
-//				}
-//			}
+			if(g.isWin() || g.isLose()) {
+				if(g.isWin()) {
+					JOptionPane.showMessageDialog(this.mainFrame, "You thắng","Yoi Win" ,JOptionPane.ERROR_MESSAGE);
+					int continues = JOptionPane.showConfirmDialog(this.mainFrame, "Do You Want To Continue ?", "YES NO QUESTION ? ", JOptionPane.YES_NO_OPTION);
+					if(continues == 0) {
+						g.setWin(false) ;
+					}else {
+						System.exit(0);
+					}
+				}
+				if (g.isLose()) {
+					JOptionPane.showMessageDialog(this.mainFrame, "You thua","Bạn Thua" ,JOptionPane.ERROR_MESSAGE);
+					int continues = JOptionPane.showConfirmDialog(this.mainFrame, "Do You Want To Continue ?", "YES NO QUESTION ? ", JOptionPane.YES_NO_OPTION);
+					if(continues == 0) {
+						g.resetGame();
+						this.rePaint(0);
+					}else {
+						System.exit(0);
+					}
+				}
+			}
 
 		}
 
-		// g.paint();
-		// topCpn.setMainFrame(this);
-		// score.setScore(g.getMyScore());
-		// stepMove.setStepMove(g.stepMove);
+
 
 	}
 

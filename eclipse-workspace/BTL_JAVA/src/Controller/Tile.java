@@ -34,29 +34,29 @@ public class Tile {
     public Color getBackground() {
 		switch (value) {
 		case 2:
-			return new Color(238, 228, 218);
+			return new Color(0xFEEBD0);
 		case 4:
-			return new Color(236, 224, 200);
+			return new Color(0xC8E2B1);
 		case 8:
-			return new Color(242, 177, 121);
+			return new Color(0x94AAD6);
 		case 16:
-			return new Color(245, 149, 99);
+			return new Color(0xF3C246);
 		case 32:
-			return new Color(245, 124, 95);
+			return new Color(0x83C75D);
 		case 64:
-			return new Color(246, 88, 66);
+			return new Color(0x00B2BF);
 		case 128:
-			return new Color(237, 206, 114);
+			return new Color(0xF19373);
 		case 256:
-			return new Color(237, 204, 97);
+			return new Color(0xFF83FA);
 		case 512:
-			return new Color(231, 196, 80);
+			return new Color(0x00FFFF);
 		case 1024:
-			return new Color(235, 194, 68);
+			return new Color(0x7FFF00);
 		case 2048:
-			return new Color(231, 189, 45);
+			return new Color(0xFF00FF);
 		}
-		return new Color(0xcdc1b4);
+		return new Color(0xCDC9C9);
 	}
 
 }

@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/Controller/ListenerGame.java=UTF-8
-encoding//src/View/NorthCpn.java=UTF-8
-encoding//src/View/SouthCpn.java=UTF-8
+encoding//src/View/Footer.java=UTF-8
+encoding//src/View/Header.java=UTF-8
+encoding//src/View/Helper.java=UTF-8

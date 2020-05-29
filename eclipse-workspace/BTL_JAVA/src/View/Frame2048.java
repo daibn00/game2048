@@ -1,56 +1,55 @@
 package View;
 
+
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import Controller.ListenerGame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import modal.File_Io_bestScore;
+import Constant.Constant;
 
 
 
 public class Frame2048 extends JFrame {
 	public ListenerGame listener  = new ListenerGame();
 	public GamePanelCpn mainGame = new GamePanelCpn(listener);
+	public Helper helper = new Helper(listener);
+	private MenuBar menuBar = new MenuBar(listener);
 	
-	JMenuBar mainMenu = new JMenuBar();	
-	JMenu menu = new JMenu("Control");
-	JMenuItem NewGame = new JMenuItem("NewGame");
-	JMenuItem Resume = new JMenuItem("Resume");
-	JMenuItem Save = new JMenuItem("Save");
-	JMenuItem Exit = new JMenuItem("Exit");
+
+	
+	ImageIcon icon;
 
 	public Frame2048() {
 		super("Game 2048");
 		this.setSize(400, 500);
 		this.setLocation(500, 400);
 		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		this.setResizable(false);
+		this.setResizable(true);
 		this.init();
 	}
 	public void init() {
-		this.add(mainGame);
-		this.addMenuBar();
+	       if(Integer.parseInt(File_Io_bestScore.readScore())==0) {
+	    		this.add(helper);
+	       }else {
+				this.add(mainGame);
+	    		this.addMenuBar();
+	       }
+	    	
+
+
+
 		this.setVisible(true);
+		icon = new ImageIcon(Constant.ICON_IMAGES);
+        this.setIconImage(icon.getImage());     
 		listener.setMain(this);
 		
 	}
 	
 	public void addMenuBar() {
+		this.setJMenuBar(menuBar);
 
-		menu.add(NewGame);
-		menu.addSeparator();
-		menu.add(Resume);
-		menu.addSeparator();
-		menu.add(Save);
-		menu.addSeparator();
-		menu.add(Exit);
-		mainMenu.add(menu);
-		NewGame.addActionListener(listener);
-		Resume.addActionListener(listener);
-		Save.addActionListener(listener);
-		Exit.addActionListener(listener);
-		this.setJMenuBar(mainMenu);
 	}
 
 	

@@ -199,18 +199,21 @@ public class Broad extends JPanel {
 	}
 
 	public boolean canMove() { // functin xem cos the di tiep hay khong
-		if (!isFull()) {
+		if(!isFull()) {
 			return true;
 		}
 
-		for (int x = 0; x < GAME_SIZE; x++) {
-			for (int y = 0; y < GAME_SIZE; y++) {
-				Tile t = tileAt(y, x);
-				if ((x < 3 && t.getValue() == tileAt(y + 1, x).getValue())
-						|| (y < 3 && t.getValue() == tileAt(x, y + 1).getValue())) {
-
-					return true;
-				}
+	
+	
+					for (int x = 0; x < 4; x++) {
+						for (int y = 0; y < 4; y++) {
+							Tile t = tileAt(x, y);
+							if ((x < 3 && t.getValue() == tileAt(x + 1, y).getValue()) || ((y < 3) && t.getValue() == tileAt(x, y + 1).getValue())) {
+								return true;
+							}
+						
+					
+				
 			}
 		}
 		return false;
@@ -279,8 +282,8 @@ public class Broad extends JPanel {
 			if (i < 3 && oldLine[i].getValue() == oldLine[i + 1].getValue()) {
 				num *= 2;
 				myScore += num;
-				if (myScore == 2048) {
-					Win = true;
+				if (myScore == 16) {
+					this.setWin(true);
 				}
 				i++;
 			}
@@ -317,27 +320,6 @@ public class Broad extends JPanel {
 		}
 		return false;
 	}
-//
-//	public void paint() {
-//		removeAll();
-//		revalidate();
-//		// repaint();
-//		for (int y = 0; y < GAME_SIZE; y++) {
-//			for (int x = 0; x < GAME_SIZE; x++) {
-//				JLabel node = new JLabel("", JLabel.CENTER);
-//				node.setText("" + myTiles[x + y * GAME_SIZE].getValue());
-//				if (myTiles[x + y * GAME_SIZE].getValue() == 0) {
-//					node.setText("");
-//				}
-//				node.setOpaque(true);
-//				node.setFont(new Font(FONT_NAME, Font.BOLD, 20));
-//				node.setForeground(myTiles[x + y * GAME_SIZE].getForeground());
-//				Border border = new LineBorder(Color.BLACK, GAME_SIZE);
-//				node.setBorder(border);
-//				node.setBackground(myTiles[x + y * GAME_SIZE].getBackground());
-//				this.add(node);
-//			}
-//		}
-//	}
+
 
 }
